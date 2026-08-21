@@ -1,18 +1,12 @@
 // File: frontend/src/components/CharacterChips.jsx
-import { colors } from '../styles';
+import { colors, fontStack } from '../styles'; // Đã sửa lại đường dẫn chuẩn
 
-/**
- * Tách chuỗi Hán tự thành từng chip riêng.
- * - Bấm vào chip: chọn ký tự đó để hiện lên khung tập viết bên phải
- *   (cập nhật ngay lập tức, không gọi API).
- * - Chip đang được chọn sẽ có viền đỏ nổi bật.
- */
 export default function CharacterChips({ hanzi, activeChar, onSelect }) {
   const chars = Array.from(hanzi);
   if (chars.length <= 1) return null;
 
   return (
-    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center', fontFamily: fontStack.vi }}>
       {chars.map((ch, i) => {
         const isActive = ch === activeChar;
         return (
@@ -21,22 +15,23 @@ export default function CharacterChips({ hanzi, activeChar, onSelect }) {
             onClick={() => onSelect(ch)}
             title={`Xem nét viết chữ "${ch}"`}
             style={{
-              fontSize: '20px',
+              fontSize: '22px',
               fontWeight: 'bold',
-              color: isActive ? colors.accent : colors.text,
-              backgroundColor: isActive ? '#fbeceb' : colors.bgSoft,
+              color: isActive ? colors.gold : colors.text,
+              backgroundColor: isActive ? '#450a0a' : colors.bg, // Nền đỏ sậm khi chọn, nền đen ấm khi bình thường
               border: `1px solid ${isActive ? colors.accent : colors.border}`,
-              borderRadius: '10px',
+              borderRadius: '4px',
               padding: '6px 14px',
               cursor: 'pointer',
-              transition: 'border-color 0.15s, color 0.15s',
+              fontFamily: fontStack.hanzi,
+              transition: 'all 0.2s',
             }}
           >
             {ch}
           </button>
         );
       })}
-      <span style={{ fontSize: '12px', color: colors.textMuted }}>Bấm để xem nét viết từng chữ</span>
+      <span style={{ fontSize: '12px', color: colors.textMuted, fontStyle: 'italic' }}>Bấm để xem nét viết từng chữ</span>
     </div>
   );
 }
